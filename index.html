@@ -769,31 +769,89 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            padding: 20px;
+        }
+        
+        .mobile-pdf-viewer {
+            flex: 1;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f5f5f5;
+            min-height: 400px;
+        }
+        
+        .mobile-pdf-viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        
+        .mobile-pdf-actions {
+            display: flex;
+            gap: 15px;
             justify-content: center;
-            align-items: center;
-            text-align: center;
         }
         
-        .mobile-pdf-info {
-            margin-bottom: 40px;
-        }
-        
-        .mobile-pdf-info p {
-            font-size: 18px;
-            color: #666;
-            margin: 10px 0;
-        }
-        
-        .mobile-pdf-buttons {
+        .pdf-loading {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            max-width: 300px;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
         
-        .mobile-pdf-download,
-        .mobile-pdf-view {
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e3e3e3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pdf-loading p {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .pdf-error {
+            text-align: center;
+            color: #dc3545;
+        }
+        
+        .pdf-error p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        .pdf-fallback {
+            text-align: center;
+            color: #667eea;
+        }
+        
+        .pdf-fallback p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        .mobile-pdf-fallback {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .mobile-pdf-external,
+        .mobile-pdf-fallback {
             padding: 15px 30px;
             font-size: 16px;
             border: none;
@@ -802,21 +860,18 @@
             transition: all 0.3s ease;
         }
         
-        .mobile-pdf-download {
+        .mobile-pdf-external {
             background: #667eea;
             color: white;
         }
         
-        .mobile-pdf-view {
-            background: #764ba2;
-            color: white;
-        }
-        
-        .mobile-pdf-download:hover,
-        .mobile-pdf-view:hover {
+        .mobile-pdf-external:hover,
+        .mobile-pdf-fallback:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
+        
+
             
             /* 移动端面板内容优化 */
             .news-header,
@@ -1320,16 +1375,28 @@
                     <button class="mobile-pdf-close" onclick="closeMobilePdf()">×</button>
                 </div>
                 <div class="mobile-pdf-content">
-                    <div class="mobile-pdf-info">
-                        <p>📄 Call for Papers PDF 文件</p>
-                        <p>点击下方按钮下载或查看PDF文件</p>
+                    <div class="mobile-pdf-viewer">
+                        <div class="pdf-loading" id="pdfLoading">
+                            <div class="loading-spinner"></div>
+                            <p>正在加载PDF.js查看器...</p>
+                        </div>
+                        <iframe 
+                            id="mobilePdfIframe"
+                            src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(window.location.origin + '/CallforPaper.pdf')}" 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0"
+                            title="Call for Papers PDF Viewer"
+                            onload="hidePdfLoading()"
+                            onerror="showPdfError()">
+                        </iframe>
                     </div>
-                    <div class="mobile-pdf-buttons">
-                        <button class="mobile-pdf-download" onclick="downloadPdf()">
-                            📥 下载PDF
+                    <div class="mobile-pdf-actions">
+                        <button class="mobile-pdf-external" onclick="viewPdfExternal()">
+                            🌐 PDF.js查看
                         </button>
-                        <button class="mobile-pdf-view" onclick="viewPdfInNewTab()">
-                            🔍 新窗口查看
+                        <button class="mobile-pdf-fallback" onclick="useFallbackViewer()">
+                            🔄 备用PDF.js
                         </button>
                     </div>
                 </div>
@@ -1339,6 +1406,14 @@
             
             // 隐藏主页内容
             document.querySelector('.main-content').classList.add('hidden');
+            
+            // 设置PDF.js加载超时检测
+            setTimeout(() => {
+                const iframe = document.getElementById('mobilePdfIframe');
+                if (iframe && iframe.contentDocument && iframe.contentDocument.body.innerHTML.includes('no enabled plugin')) {
+                    showPdfError();
+                }
+            }, 5000);
         }
         
         // 关闭手机端PDF面板
@@ -1351,18 +1426,99 @@
             document.querySelector('.main-content').classList.remove('hidden');
         }
         
-        // 下载PDF文件
-        function downloadPdf() {
-            const link = document.createElement('a');
-            link.href = 'pdf/CallforPaper.pdf';
-            link.download = 'ICGEC-2025_Call_for_Papers.pdf';
-            link.click();
-        }
+
         
         // 在新窗口打开PDF
         function viewPdfInNewTab() {
             window.open('pdf/CallforPaper.pdf', '_blank');
         }
+        
+        // 外部查看PDF（使用多个PDF.js预览服务）
+        function viewPdfExternal() {
+            const pdfUrl = window.location.origin + '/CallforPaper.pdf';
+            
+            // 使用多个PDF.js镜像站点
+            const viewers = [
+                `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}`,
+                `https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/web/viewer.html?file=${encodeURIComponent(pdfUrl)}`,
+                `https://unpkg.com/pdfjs-dist@3.11.174/web/viewer.html?file=${encodeURIComponent(pdfUrl)}`
+            ];
+            
+            // 随机选择一个预览服务
+            const randomViewer = viewers[Math.floor(Math.random() * viewers.length)];
+            window.open(randomViewer, '_blank');
+        }
+        
+        // 隐藏PDF加载状态
+        function hidePdfLoading() {
+            const loading = document.getElementById('pdfLoading');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+        }
+        
+        // 显示PDF错误信息
+        function showPdfError() {
+            const iframe = document.getElementById('mobilePdfIframe');
+            const loading = document.getElementById('pdfLoading');
+            
+            if (iframe) {
+                iframe.style.display = 'none';
+            }
+            
+            if (loading) {
+                loading.innerHTML = `
+                    <div class="pdf-error">
+                        <p>⚠️ PDF.js加载失败</p>
+                        <p>请使用下方按钮切换到其他PDF.js预览器</p>
+                    </div>
+                `;
+                loading.style.display = 'block';
+            }
+        }
+        
+        // 使用备用预览器
+        function useFallbackViewer() {
+            const iframe = document.getElementById('mobilePdfIframe');
+            const loading = document.getElementById('pdfLoading');
+            
+            if (iframe) {
+                iframe.style.display = 'none';
+            }
+            
+            if (loading) {
+                loading.innerHTML = `
+                    <div class="pdf-fallback">
+                        <p>🔄 正在切换到备用PDF.js预览器...</p>
+                        <div class="loading-spinner"></div>
+                    </div>
+                `;
+                
+                // 使用其他PDF.js镜像站点作为备用预览器
+                const fallbackUrls = [
+                    `https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/web/viewer.html?file=${encodeURIComponent(window.location.origin + '/CallforPaper.pdf')}`,
+                    `https://unpkg.com/pdfjs-dist@3.11.174/web/viewer.html?file=${encodeURIComponent(window.location.origin + '/CallforPaper.pdf')}`,
+                    `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(window.location.origin + '/CallforPaper.pdf')}`
+                ];
+                
+                // 随机选择一个备用预览器
+                const randomUrl = fallbackUrls[Math.floor(Math.random() * fallbackUrls.length)];
+                
+                setTimeout(() => {
+                    if (iframe) {
+                        iframe.src = randomUrl;
+                        iframe.style.display = 'block';
+                        loading.style.display = 'none';
+                    }
+                }, 1000);
+            }
+        }
+        
+
+        
+
+        
+
 
         // ================================
         // 中文注释：Important Dates 面板 显示/隐藏
