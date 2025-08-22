@@ -50,12 +50,6 @@
         .mobile-nav-toggle {
             display: none;
         }
-        
-        /* 桌面端隐藏移动端导航菜单标题和Contact Us按钮 */
-        .mobile-nav-title,
-        .mobile-contact-item {
-            display: none;
-        }
 
         .sidebar-header {
             text-align: center;
@@ -624,46 +618,6 @@
                 animation: slideIn 0.3s ease-out;
             }
             
-            /* 移动端导航菜单标题 */
-            .mobile-nav-title {
-                font-size: 24px;
-                font-weight: bold;
-                color: white;
-                text-align: center;
-                margin-bottom: 30px;
-                padding: 20px 0;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                list-style: none;
-            }
-            
-            /* 移动端Contact Us按钮 */
-            .mobile-contact-item {
-                margin-top: 30px;
-                padding: 20px 0;
-                border-top: 1px solid rgba(255, 255, 255, 0.2);
-                list-style: none;
-                text-align: center;
-            }
-            
-            .mobile-contact-btn {
-                background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-                color: white;
-                border: none;
-                padding: 15px 30px;
-                border-radius: 25px;
-                font-weight: bold;
-                font-size: 16px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                width: 200px;
-                max-width: 100%;
-            }
-            
-            .mobile-contact-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-            }
-            
             @keyframes slideIn {
                 from {
                     opacity: 0;
@@ -882,7 +836,7 @@
         <!-- 左侧状态栏 -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <h1><a href="#" id="homeLink" style="color:inherit;text-decoration:none;">ICGEC-2025</a></h1>
+                <h1>ICGEC-2025</h1>
                 
                 <!-- 移动端导航按钮 -->
                 <button class="mobile-nav-toggle" id="mobileNavToggle">
@@ -893,10 +847,8 @@
             </div>
             
             <ul class="nav-menu">
-                <!-- 移动端导航菜单标题 -->
-                <li class="mobile-nav-title">ICGEC-2025</li>
-                
-                <li><a href="#" class="active">News</a></li>
+                <li><a href="#" class="active">ICGEC-2025</a></li>
+                <li><a href="#">News</a></li>
                 <li><a href="#">Galleries</a></li>
                 <li><a href="#">Organizing Committee</a></li>
                 <li><a href="#">Keynote Speech</a></li>
@@ -914,11 +866,7 @@
                 <li><a href="#">Visa Application</a></li>
                 <li><a href="#">Access to Venue</a></li>
                 <li><a href="#">City Information</a></li>
-                
-                <!-- 移动端Contact Us按钮 -->
-                <li class="mobile-contact-item">
-                    <button class="mobile-contact-btn">Contact Us</button>
-                </li>
+                <li><a href="#">Contact Us</a></li>
             </ul>
             
             <div class="contact-btn">
@@ -1208,7 +1156,9 @@
 
                 // 中文注释：根据具体菜单只显示对应面板
                 const text = this.textContent.trim();
-                if (text === 'News') {
+                if (text === 'ICGEC-2025') {
+                    showHome();
+                } else if (text === 'News') {
                     showNews();
                 } else if (text === 'Call for Papers') {
                     showPdfPanel();
@@ -1283,19 +1233,11 @@
             document.getElementById('committeePanel').classList.remove('active');
         }
 
-        // 中文注释：返回主页（仅标题点击时）
+        // 中文注释：返回主页（点击ICGEC-2025菜单项时）
         function showHome() {
             hideAllPanels();
             document.querySelector('.main-content').classList.remove('hidden');
         }
-
-        // Click site title to go back to homepage
-        document.getElementById('homeLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            showHome();
-            // remove active state from News
-            document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
-        });
 
         // 移动端导航按钮事件处理
         document.getElementById('mobileNavToggle').addEventListener('click', function() {
@@ -1335,20 +1277,6 @@
         // Contact Us button click event
         document.querySelector('.contact-btn button').addEventListener('click', function() {
             alert('Thank you for your interest!\n\nContact Information:\nEmail: icgec2025@example.com\nPhone: +86-XXX-XXXX-XXXX\nAddress: Fuzhou/Nanyang, China');
-        });
-
-        // 移动端Contact Us按钮事件处理
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('mobile-contact-btn')) {
-                // 可以在这里添加Contact Us的具体功能
-                alert('Contact Us functionality will be implemented here.');
-                
-                // 关闭导航菜单
-                if (window.innerWidth <= 768) {
-                    document.querySelector('.nav-menu').classList.remove('active');
-                    removeCloseButton();
-                }
-            }
         });
     </script>
 </body>
