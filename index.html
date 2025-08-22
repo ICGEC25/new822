@@ -50,6 +50,12 @@
         .mobile-nav-toggle {
             display: none;
         }
+        
+        /* 桌面端隐藏移动端导航菜单标题和Contact Us按钮 */
+        .mobile-nav-title,
+        .mobile-contact-item {
+            display: none;
+        }
 
         .sidebar-header {
             text-align: center;
@@ -427,6 +433,19 @@
         }
         .dates-panel.active { display: block; }
 
+        .dates-close-btn {
+            position: sticky;
+            top: 12px;
+            float: right;
+            margin: 12px 20px 0 0;
+            background: #ff6b6b;
+            border: none;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
         .dates-header {
             text-align: center;
             font-size: 48px;
@@ -472,6 +491,20 @@
             display: none;
         }
         .committee-panel.active { display: block; }
+        
+        .committee-close-btn {
+            position: sticky;
+            top: 12px;
+            float: right;
+            margin: 12px 20px 0 0;
+            background: #ff6b6b;
+            border: none;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
         .committee-header {
             text-align: center;
             font-size: 48px;
@@ -540,8 +573,8 @@
             
             /* 移动端轮播图优化 */
             .main-content {
-                height: calc(100vh - 200px);
-                min-height: 400px;
+                height: calc(100vh - 150px);
+                min-height: 350px;
             }
             
             .carousel {
@@ -553,7 +586,7 @@
                 display: block;
                 position: absolute;
                 top: 20px;
-                right: 20px;
+                left: 20px;
                 background: rgba(0, 0, 0, 0.8);
                 border: none;
                 padding: 10px;
@@ -589,6 +622,46 @@
             .nav-menu.active {
                 display: block;
                 animation: slideIn 0.3s ease-out;
+            }
+            
+            /* 移动端导航菜单标题 */
+            .mobile-nav-title {
+                font-size: 24px;
+                font-weight: bold;
+                color: white;
+                text-align: center;
+                margin-bottom: 30px;
+                padding: 20px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                list-style: none;
+            }
+            
+            /* 移动端Contact Us按钮 */
+            .mobile-contact-item {
+                margin-top: 30px;
+                padding: 20px 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                list-style: none;
+                text-align: center;
+            }
+            
+            .mobile-contact-btn {
+                background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 25px;
+                font-weight: bold;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                width: 200px;
+                max-width: 100%;
+            }
+            
+            .mobile-contact-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
             }
             
             @keyframes slideIn {
@@ -644,11 +717,16 @@
             }
             
             .conference-info h2 {
-                font-size: 28px;
+                font-size: 24px;
             }
             
             .conference-info h3 {
-                font-size: 20px;
+                font-size: 16px;
+            }
+            
+            .conf-date {
+                font-size: 14px;
+                margin: 8px 0;
             }
             
             .conference-dates {
@@ -657,18 +735,18 @@
             }
             
             .carousel-logos {
-                gap: 30px;
-                bottom: 20px;
+                gap: 20px;
+                bottom: 15px;
             }
             
             .carousel-logo-img {
-                width: 160px;
-                height: 160px;
+                width: 120px;
+                height: 120px;
             }
             
             .carousel-logo-img img {
-                width: 120px;
-                height: 120px;
+                width: 80px;
+                height: 80px;
             }
             
             .carousel-logo-text {
@@ -676,7 +754,44 @@
             }
             
             .carousel-controls {
-                bottom: 100px;
+                bottom: 80px;
+            }
+            
+            .carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+            
+            /* 移动端Close按钮优化 */
+            .news-close-btn,
+            .dates-close-btn,
+            .committee-close-btn {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 1002;
+                padding: 12px 20px;
+                font-size: 16px;
+                border-radius: 8px;
+            }
+            
+            /* 移动端面板内容优化 */
+            .news-header,
+            .dates-header,
+            .committee-header {
+                font-size: 28px;
+                padding: 20px;
+            }
+            
+            .news-row .title,
+            .dates-text,
+            .committee-pill {
+                font-size: 16px;
+            }
+            
+            .news-row .desc,
+            .committee-list li {
+                font-size: 14px;
             }
             
                     /* 中文注释：在小屏时侧边栏在上方占满宽度，因此所有面板从左侧0开始覆盖下方主区域 */
@@ -778,6 +893,9 @@
             </div>
             
             <ul class="nav-menu">
+                <!-- 移动端导航菜单标题 -->
+                <li class="mobile-nav-title">ICGEC-2025</li>
+                
                 <li><a href="#" class="active">News</a></li>
                 <li><a href="#">Galleries</a></li>
                 <li><a href="#">Organizing Committee</a></li>
@@ -796,7 +914,11 @@
                 <li><a href="#">Visa Application</a></li>
                 <li><a href="#">Access to Venue</a></li>
                 <li><a href="#">City Information</a></li>
-                <li><a href="#"></a></li>
+                
+                <!-- 移动端Contact Us按钮 -->
+                <li class="mobile-contact-item">
+                    <button class="mobile-contact-btn">Contact Us</button>
+                </li>
             </ul>
             
             <div class="contact-btn">
@@ -903,6 +1025,7 @@
     <!-- 中文注释：Important Dates 面板（展示关键日期） -->
     <!-- ================================ -->
     <div class="dates-panel" id="datesPanel">
+        <button class="dates-close-btn" onclick="hideDatesPanel()">Close</button>
         <div class="dates-header">IMPORTANCE DATES</div>
         <div class="dates-list">
             <div class="dates-block">
@@ -931,6 +1054,7 @@
     <!-- 中文注释：Organizing Committee 面板（右侧展示组委会信息） -->
     <!-- ================================ -->
     <div class="committee-panel" id="committeePanel">
+        <button class="committee-close-btn" onclick="hideCommitteePanel()">Close</button>
         <div class="committee-header">ORGANIZING COMMITTEE</div>
         <div class="committee-wrap">
             <div class="committee-section">
@@ -1093,6 +1217,12 @@
                 } else if (text === 'Organizing Committee') {
                     showCommitteePanel();
                 }
+                
+                // 移动端点击导航菜单后自动关闭导航菜单
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.nav-menu').classList.remove('active');
+                    removeCloseButton();
+                }
             });
         });
 
@@ -1205,6 +1335,20 @@
         // Contact Us button click event
         document.querySelector('.contact-btn button').addEventListener('click', function() {
             alert('Thank you for your interest!\n\nContact Information:\nEmail: icgec2025@example.com\nPhone: +86-XXX-XXXX-XXXX\nAddress: Fuzhou/Nanyang, China');
+        });
+
+        // 移动端Contact Us按钮事件处理
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('mobile-contact-btn')) {
+                // 可以在这里添加Contact Us的具体功能
+                alert('Contact Us functionality will be implemented here.');
+                
+                // 关闭导航菜单
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.nav-menu').classList.remove('active');
+                    removeCloseButton();
+                }
+            }
         });
     </script>
 </body>
