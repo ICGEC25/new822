@@ -107,28 +107,10 @@
             border-radius: 50%;
         }
 
-        .contact-btn {
-            position: absolute;
-            bottom: 30px;
-            left: 20px;
-            right: 20px;
-        }
-
-        .contact-btn button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .contact-btn button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+        .carousel-dot.active {
+            height: 8px;
+            background: #ff6b6b;
+            border-radius: 50%;
         }
 
         /* 右侧轮播图区域 */
@@ -868,10 +850,6 @@
                 <li><a href="#">City Information</a></li>
                 <li><a href="#">Contact Us</a></li>
             </ul>
-            
-            <div class="contact-btn">
-                <button>Contact Us</button>
-            </div>
         </div>
 
         <!-- 右侧轮播图区域 -->
@@ -1195,6 +1173,12 @@
         // Hide full-width news panel and show homepage content
         function hideNewsPanel() {
             document.getElementById('newsPanel').classList.remove('active');
+            // 返回轮播图页面（主页）
+            showHome();
+            // 重置导航菜单的激活状态
+            document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+            // 设置ICGEC-2025为激活状态
+            document.querySelector('.nav-menu a:first-child').classList.add('active');
         }
 
         // ================================
@@ -1207,6 +1191,12 @@
 
         function hidePdfPanel() {
             document.getElementById('pdfPanel').classList.remove('active');
+            // 返回轮播图页面（主页）
+            showHome();
+            // 重置导航菜单的激活状态
+            document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+            // 设置ICGEC-2025为激活状态
+            document.querySelector('.nav-menu a:first-child').classList.add('active');
         }
 
         // ================================
@@ -1219,6 +1209,12 @@
 
         function hideDatesPanel() {
             document.getElementById('datesPanel').classList.remove('active');
+            // 返回轮播图页面（主页）
+            showHome();
+            // 重置导航菜单的激活状态
+            document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+            // 设置ICGEC-2025为激活状态
+            document.querySelector('.nav-menu a:first-child').classList.add('active');
         }
 
         // ================================
@@ -1231,6 +1227,12 @@
 
         function hideCommitteePanel() {
             document.getElementById('committeePanel').classList.remove('active');
+            // 返回轮播图页面（主页）
+            showHome();
+            // 重置导航菜单的激活状态
+            document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+            // 设置ICGEC-2025为激活状态
+            document.querySelector('.nav-menu a:first-child').classList.add('active');
         }
 
         // 中文注释：返回主页（点击ICGEC-2025菜单项时）
@@ -1259,8 +1261,17 @@
                 closeBtn.className = 'mobile-close-btn';
                 closeBtn.innerHTML = '×';
                 closeBtn.onclick = function() {
+                    // 关闭导航菜单
                     document.querySelector('.nav-menu').classList.remove('active');
                     removeCloseButton();
+                    
+                    // 返回轮播图页面（主页）
+                    showHome();
+                    
+                    // 重置导航菜单的激活状态
+                    document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+                    // 设置ICGEC-2025为激活状态
+                    document.querySelector('.nav-menu a:first-child').classList.add('active');
                 };
                 document.body.appendChild(closeBtn);
             }
@@ -1273,11 +1284,6 @@
                 closeBtn.remove();
             }
         }
-
-        // Contact Us button click event
-        document.querySelector('.contact-btn button').addEventListener('click', function() {
-            alert('Thank you for your interest!\n\nContact Information:\nEmail: icgec2025@example.com\nPhone: +86-XXX-XXXX-XXXX\nAddress: Fuzhou/Nanyang, China');
-        });
     </script>
 </body>
 </html>
