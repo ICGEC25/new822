@@ -497,6 +497,66 @@
         .committee-list { margin-top: 16px; padding-left: 28px; }
         .committee-list li { margin: 8px 0; font-size: 18px; color:#111; }
 
+        /* ================================ */
+        /* 中文注释：Paper Submission 面板样式 */
+        /* ================================ */
+        .submission-panel {
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 280px;
+            background: rgba(255,255,255,0.95);
+            overflow-y: auto;
+            z-index: 24;
+            display: none;
+        }
+        .submission-panel.active { display: block; }
+        
+        .submission-close-btn {
+            position: sticky;
+            top: 12px;
+            float: right;
+            margin: 12px 20px 0 0;
+            background: #ff6b6b;
+            border: none;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .submission-header {
+            text-align: center;
+            font-size: 48px;
+            letter-spacing: 3px;
+            color: #222;
+            padding: 26px 20px 14px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .submission-wrap { max-width: 1100px; margin: 24px auto 80px auto; padding: 0 20px; }
+        .submission-section { margin: 28px 0; }
+        .submission-section h3 { 
+            color: #0e9a8c; 
+            font-size: 24px; 
+            margin-bottom: 15px; 
+            font-weight: 700;
+        }
+        .submission-section p { 
+            margin: 12px 0; 
+            font-size: 20px; 
+            color: #333; 
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        .submission-section ol { 
+            margin: 12px 0; 
+            padding-left: 20px; 
+        }
+        .submission-section li { 
+            margin: 8px 0; 
+            font-size: 16px; 
+            color: #333; 
+            line-height: 1.6;
+        }
+
         .carousel-logo-item {
             display: flex;
             flex-direction: column;
@@ -969,7 +1029,8 @@
         .news-panel,
         .pdf-panel,
         .dates-panel,
-        .committee-panel {
+        .committee-panel,
+        .submission-panel {
             left: 0;
         }
         
@@ -977,7 +1038,8 @@
         .news-panel,
         .pdf-panel,
         .dates-panel,
-        .committee-panel {
+        .committee-panel,
+        .submission-panel {
             z-index: 1000;
         }
         
@@ -1029,20 +1091,23 @@
         /* 移动端通用优化 */
         .news-panel .news-header,
         .dates-panel .dates-header,
-        .committee-panel .committee-header {
+        .committee-panel .committee-header,
+        .submission-panel .submission-header {
             font-size: 32px;
             padding: 20px;
         }
         
         .news-panel .news-list,
         .dates-panel .dates-list,
-        .committee-panel .committee-wrap {
+        .committee-panel .committee-wrap,
+        .submission-panel .submission-wrap {
             padding: 0 20px 20px 20px;
         }
         
         .news-row,
         .dates-block,
-        .committee-section {
+        .committee-section,
+        .submission-section {
             margin: 15px 0;
         }
         }
@@ -1187,137 +1252,150 @@
         <div class="dates-list">
             <div class="dates-block">
                 <span class="dates-pill pill-green">Paper submission deadline</span>
-                <div class="dates-text">August 30, 2025 (Final Extension)</div>
+                <div class="dates-text">Oct 1st, 2025 (Final Extension)</div>
             </div>
 
             <div class="dates-block">
                 <span class="dates-pill pill-brown">Invited session application deadline</span>
-                <div class="dates-text">September 30, 2025 (Final Extension)</div>
+                <div class="dates-text">Sep 30, 2025 (Final Extension)</div>
             </div>
 
             <div class="dates-block">
                 <span class="dates-pill pill-green">Acceptance notification</span>
-                <div class="dates-text">October 30, 2025</div>
+                <div class="dates-text">Nov 20th, 2025</div>
             </div>
 
             <div class="dates-block">
                 <span class="dates-pill pill-brown">Camera-ready papers due</span>
-                <div class="dates-text">November 15, 2025</div>
+                <div class="dates-text">Nov 25th, 2025</div>
             </div>
         </div>
     </div>
 
-    <!-- ================================ -->
-    <!-- 中文注释：Organizing Committee 面板（右侧展示组委会信息） -->
-    <!-- ================================ -->
-    <div class="committee-panel" id="committeePanel">
-        <button class="committee-close-btn" onclick="hideCommitteePanel()">Close</button>
-        <div class="committee-header">ORGANIZING COMMITTEE</div>
-        <div class="committee-wrap">
-            <div class="committee-section">
-                <span class="committee-pill">Honorary Chairs</span>
-                <ul class="committee-list">
-                    <li>Jeng-Shyang Pan, Nanjing University of Information Science & Technology, China</li>
-                </ul>
-            </div>
+            <!-- ================================ -->
+        <!-- 中文注释：Organizing Committee 面板（右侧展示组委会信息） -->
+        <!-- ================================ -->
+        <div class="committee-panel" id="committeePanel">
+            <button class="committee-close-btn" onclick="hideCommitteePanel()">Close</button>
+            <div class="committee-header">ORGANIZING COMMITTEE</div>
+            <div class="committee-wrap">
+                <div class="committee-section">
+                    <span class="committee-pill">Honorary Chairs</span>
+                    <ul class="committee-list">
+                        <li>Jeng-Shyang Pan, Nanjing University of Information Science & Technology, China</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Advisory Committee Chairs</span>
-                <ul class="committee-list">
-                    <li>Shen Yin, Norwegian University of Science and Technology, Norway</li>
-                    <li>Giancarlo Fortino, University of Calabria, Italy</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Advisory Committee Chairs</span>
+                    <ul class="committee-list">
+                        <li>Shen Yin, Norwegian University of Science and Technology, Norway</li>
+                        <li>Giancarlo Fortino, University of Calabria, Italy</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Conference Chairs</span>
-                <ul class="committee-list">
-                    <li>Xinhua Jiang, Yango University, China</li>
-                    <li>Haoshan Hao, Nanyang Institute of Technology, China</li>
-                    <li>Jerry Chun-Wei Lin, Silesian University of Technology, Poland</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Conference Chairs</span>
+                    <ul class="committee-list">
+                        <li>Xinhua Jiang, Yango University, China</li>
+                        <li>Haoshan Hao, Nanyang Institute of Technology, China</li>
+                        <li>Jerry Chun-Wei Lin, Silesian University of Technology, Poland</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Program Committee Chairs</span>
-                <ul class="committee-list">
-                    <li>Xinyu Da, Yango University, China</li>
-                    <li>Liming Liu, Nanyang Institute of Technology, China</li>
-                    <li>Xingsi Xue, Fujian University of Technology, China</li>
-                    <li>Thi Thi Zin, University of Miyazaki, Japan</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Program Committee Chairs</span>
+                    <ul class="committee-list">
+                        <li>Xinyu Da, Yango University, China</li>
+                        <li>Liming Liu, Nanyang Institute of Technology, China</li>
+                        <li>Xingsi Xue, Fujian University of Technology, China</li>
+                        <li>Thi Thi Zin, University of Miyazaki, Japan</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Publication Chairs</span>
-                <ul class="committee-list">
-                    <li>Lingda Chi, Yango University, China</li>
-                    <li>Pei Hu, Nanyang Institute of Technology, China</li>
-                    <li>Shu-Chuan Chu, Nanjing University of Information Science and Technology, China</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Publication Chairs</span>
+                    <ul class="committee-list">
+                        <li>Lingda Chi, Yango University, China</li>
+                        <li>Pei Hu, Nanyang Institute of Technology, China</li>
+                        <li>Shu-Chuan Chu, Nanjing University of Information Science and Technology, China</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Invited Session Chairs</span>
-                <ul class="committee-list">
-                    <li>Tien-Wen Sung, Fujian University of Technology, China</li>
-                    <li>Pei Hu, Nanyang Institute of Technology, China</li>
-                    <li>Zheng Zhang, Nanyang Institute of Technology, China</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Invited Session Chairs</span>
+                    <ul class="committee-list">
+                        <li>Tien-Wen Sung, Fujian University of Technology, China</li>
+                        <li>Pei Hu, Nanyang Institute of Technology, China</li>
+                        <li>Zheng Zhang, Nanyang Institute of Technology, China</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Local Organizing Chairs</span>
-                <ul class="committee-list">
-                    <li>Chengli Luo, Yango University, China</li>
-                    <li>Yanling Shao, Nanyang Institute of Technology, China</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Local Organizing Chairs</span>
+                    <ul class="committee-list">
+                        <li>Chengli Luo, Yango University, China</li>
+                        <li>Yanling Shao, Nanyang Institute of Technology, China</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Finance Chairs</span>
-                <ul class="committee-list">
-                    <li>Chen Zhong, Yango University, China</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Finance Chairs</span>
+                    <ul class="committee-list">
+                        <li>Chen Zhong, Yango University, China</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Program Committee Member</span>
-                <ul class="committee-list">
-                    <li>Dr Wasim Ullah Khan, City University of Hong Kong, China</li>
-                    <li>Dr. MD SHAMIM HOSSAIN, ISLAMIC UNIVERSITY, BANGLADESH</li>
-                    <li>Dr. JAMAL FIRMAN BANZI, SOKOINE UNIVERSITY OF AGRICULTURE, Tanzania</li>
-                    <li>Dr. Aamir Asalan, Fatima Jinnah Women University Rawalpindi, Pakistan</li>
-                    <li>Prof. Dr Saad Aslam, Sunway University, Malaysia</li>
-                    <li>Bay Vo, HUTECH University, Vietnam</li>
-                    <li>Francesco Piccialli, University of Naples Federico II, Italy</li>
-                    <li>Vicente Garcia Diaz, University of Oviedo, Spain</li>
-                    <li>Jaroslav Frnda, University of Zilina, Slovakia</li>
-                    <li>Stefania Tomasiello, University of Salerno, Italy</li>
-                    <li>Liming Liu, Nanyang Institute of Technology, China</li>
-                    <li>Yanling Shao, Nanyang Institute of Technology, China</li>
-                    <li>Lu Yin, University of Surrey, UK</li>
-                    <li>Wenyong Dong, Wuhan University, China</li>
-                    <li>Lin Xu, The University of Adelaide, Australia</li>
-                    <li>Hao Liao, Shenzhen University, China</li>
-                    <li>Wenzhao Zheng, University of California, Berkeley, USA</li>
-                    <li>Dajun Huang, Sungkunkwan University, South Korea</li>
-                    <li>Xiaopeng Wang, VSB-TU of Ostrava, Czech Republic</li>
-                    <li>Himanshu Dhurmas, Chandigarh Engineering College, India</li>
-                    <li>Hai Zhu, Henan University of Engineering, China</li>
-                    <li>Wenxi Liu, Fuzhou University, China</li>
-                    <li>Heming Jia, Sanming University, China</li>
-                </ul>
-            </div>
+                <div class="committee-section">
+                    <span class="committee-pill">Program Committee Member</span>
+                    <ul class="committee-list">
+                        <li>Dr Wasim Ullah Khan, City University of Hong Kong, China</li>
+                        <li>Dr. MD SHAMIM HOSSAIN, ISLAMIC UNIVERSITY, BANGLADESH</li>
+                        <li>Dr. JAMAL FIRMAN BANZI, SOKOINE UNIVERSITY OF AGRICULTURE, Tanzania</li>
+                        <li>Dr. Aamir Asalan, Fatima Jinnah Women University Rawalpindi, Pakistan</li>
+                        <li>Prof. Dr Saad Aslam, Sunway University, Malaysia</li>
+                        <li>Bay Vo, HUTECH University, Vietnam</li>
+                        <li>Francesco Piccialli, University of Naples Federico II, Italy</li>
+                        <li>Vicente Garcia Diaz, University of Oviedo, Spain</li>
+                        <li>Jaroslav Frnda, University of Zilina, Slovakia</li>
+                        <li>Stefania Tomasiello, University of Salerno, Italy</li>
+                        <li>Liming Liu, Nanyang Institute of Technology, China</li>
+                        <li>Yanling Shao, Nanyang Institute of Technology, China</li>
+                        <li>Lu Yin, University of Surrey, UK</li>
+                        <li>Wenyong Dong, Wuhan University, China</li>
+                        <li>Lin Xu, The University of Adelaide, Australia</li>
+                        <li>Hao Liao, Shenzhen University, China</li>
+                        <li>Wenzhao Zheng, University of California, Berkeley, USA</li>
+                        <li>Dajun Huang, Sungkunkwan University, South Korea</li>
+                        <li>Xiaopeng Wang, VSB-TU of Ostrava, Czech Republic</li>
+                        <li>Himanshu Dhurmas, Chandigarh Engineering College, India</li>
+                        <li>Hai Zhu, Henan University of Engineering, China</li>
+                        <li>Wenxi Liu, Fuzhou University, China</li>
+                        <li>Heming Jia, Sanming University, China</li>
+                    </ul>
+                </div>
 
-            <div class="committee-section">
-                <span class="committee-pill">Keynote Speaker</span>
-                <ul class="committee-list">
-                    <li>Wenyong Dong, Wuhan University , China</li>
-                </ul>
+                <div class="committee-section">
+                    <span class="committee-pill">Keynote Speaker</span>
+                    <ul class="committee-list">
+                        <li>Wenyong Dong, Wuhan University , China</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- ================================ -->
+        <!-- 中文注释：Paper Submission 面板（论文提交页面） -->
+        <!-- ================================ -->
+        <div class="submission-panel" id="submissionPanel">
+            <button class="submission-close-btn" onclick="hideSubmissionPanel()">Close</button>
+            <div class="submission-header">PAPER SUBMISSION</div>
+            <div class="submission-wrap">
+                <div class="submission-section">
+                    <p>The Microsoft CMT service was used for managing the peer-reviewing process for this conference. This service was provided for free by Microsoft and they bore all expenses, including costs for Azure cloud services as well as for software development and support.</p>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
@@ -1375,6 +1453,8 @@
                     showDatesPanel();
                 } else if (text === 'Organizing Committee') {
                     showCommitteePanel();
+                } else if (text === 'Paper Submission') {
+                    showSubmissionPanel();
                 }
                 
                 // 移动端点击导航菜单后自动关闭导航菜单
@@ -1393,6 +1473,8 @@
             if (datesP) datesP.classList.remove('active');
             const commP = document.getElementById('committeePanel');
             if (commP) commP.classList.remove('active');
+            const submP = document.getElementById('submissionPanel');
+            if (submP) submP.classList.remove('active');
             
             // 关闭移动端PDF图片显示
             const mobileContainer = document.querySelector('.mobile-pdf-image-container');
@@ -1536,6 +1618,30 @@
 
         function hideCommitteePanel() {
             document.getElementById('committeePanel').classList.remove('active');
+            // 返回轮播图页面（主页）
+            showHome();
+            // 重置导航菜单的激活状态
+            document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+            // 设置ICGEC-2025为激活状态
+            document.querySelector('.nav-menu a:first-child').classList.add('active');
+        }
+
+        // ================================
+        // 中文注释：Paper Submission 面板 显示/隐藏
+        // ================================
+        function showSubmissionPanel() {
+            // 先关闭移动端PDF图片显示
+            const mobileContainer = document.querySelector('.mobile-pdf-image-container');
+            if (mobileContainer) {
+                mobileContainer.remove();
+            }
+            
+            document.getElementById('submissionPanel').classList.add('active');
+            document.querySelector('.main-content').classList.add('hidden');
+        }
+
+        function hideSubmissionPanel() {
+            document.getElementById('submissionPanel').classList.remove('active');
             // 返回轮播图页面（主页）
             showHome();
             // 重置导航菜单的激活状态
