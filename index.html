@@ -557,6 +557,83 @@
             line-height: 1.6;
         }
 
+        /* ================================ */
+        /* 中文注释：Presentation Guidelines 面板样式 */
+        /* ================================ */
+        .presentation-panel {
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 280px;
+            background: rgba(255,255,255,0.95);
+            overflow-y: auto;
+            z-index: 25;
+            display: none;
+        }
+        .presentation-panel.active { display: block; }
+        
+        .presentation-close-btn {
+            position: sticky;
+            top: 12px;
+            float: right;
+            margin: 12px 20px 0 0;
+            background: #ff6b6b;
+            border: none;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .presentation-header {
+            text-align: center;
+            font-size: 48px;
+            letter-spacing: 3px;
+            color: #222;
+            padding: 26px 20px 14px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .presentation-wrap { 
+            max-width: 1100px; 
+            margin: 24px auto 80px auto; 
+            padding: 0 20px; 
+        }
+        .presentation-section { 
+            margin: 28px 0; 
+            text-align: center;
+        }
+        .presentation-section h3 { 
+            color: #0e9a8c; 
+            font-size: 32px; 
+            margin-bottom: 20px; 
+            font-weight: 700;
+        }
+        .presentation-section p { 
+            margin: 15px 0; 
+            font-size: 24px; 
+            color: #333; 
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        .presentation-section ul { 
+            margin: 20px 0; 
+            padding-left: 0; 
+            list-style: none;
+        }
+        .presentation-section li { 
+            margin: 12px 0; 
+            font-size: 20px; 
+            color: #333; 
+            line-height: 1.6;
+            padding-left: 20px;
+            position: relative;
+        }
+        .presentation-section li::before {
+            content: "•";
+            color: #0e9a8c;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
         .carousel-logo-item {
             display: flex;
             flex-direction: column;
@@ -915,7 +992,9 @@
                     /* 移动端Close按钮优化 */
         .news-close-btn,
         .dates-close-btn,
-        .committee-close-btn {
+        .committee-close-btn,
+        .submission-close-btn,
+        .presentation-close-btn {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -1030,7 +1109,8 @@
         .pdf-panel,
         .dates-panel,
         .committee-panel,
-        .submission-panel {
+        .submission-panel,
+        .presentation-panel {
             left: 0;
         }
         
@@ -1039,7 +1119,8 @@
         .pdf-panel,
         .dates-panel,
         .committee-panel,
-        .submission-panel {
+        .submission-panel,
+        .presentation-panel {
             z-index: 1000;
         }
         
@@ -1092,7 +1173,8 @@
         .news-panel .news-header,
         .dates-panel .dates-header,
         .committee-panel .committee-header,
-        .submission-panel .submission-header {
+        .submission-panel .submission-header,
+        .presentation-panel .presentation-header {
             font-size: 32px;
             padding: 20px;
         }
@@ -1100,14 +1182,16 @@
         .news-panel .news-list,
         .dates-panel .dates-list,
         .committee-panel .committee-wrap,
-        .submission-panel .submission-wrap {
+        .submission-panel .submission-wrap,
+        .presentation-panel .presentation-wrap {
             padding: 0 20px 20px 20px;
         }
         
         .news-row,
         .dates-block,
         .committee-section,
-        .submission-section {
+        .submission-section,
+        .presentation-section {
             margin: 15px 0;
         }
         }
@@ -1136,10 +1220,7 @@
                 <li><a href="#">Paper Submission</a></li>
                 <li><a href="#">Accepted Papers</a></li>
                 <li><a href="#">Presentation Guidelines</a></li>
-                <li><a href="#">Conference Registration</a></li>
                 <li><a href="#">Conference Program</a></li>
-                <li><a href="#">Conference Excursion</a></li>
-                <li><a href="#">Conference Venue</a></li>
                 <li><a href="#">Recommended Hotel</a></li>
                 <li><a href="#">Visa Application</a></li>
                 <li><a href="#">Access to Venue</a></li>
@@ -1409,6 +1490,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- ================================ -->
+        <!-- 中文注释：Presentation Guidelines 面板（演讲指南页面） -->
+        <!-- ================================ -->
+        <div class="presentation-panel" id="presentationPanel">
+            <button class="presentation-close-btn" onclick="hidePresentationPanel()">Close</button>
+            <div class="presentation-header">PRESENTATION GUIDELINES</div>
+            <div class="presentation-wrap">
+                <div class="presentation-section">
+                    <h3>Presentation Guidelines</h3>
+                    <p>Each oral presentation has 15 minutes:</p>
+                    <ul>
+                        <li>12 minutes for presentation</li>
+                        <li>3 minutes for Q&A</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
@@ -1468,6 +1567,8 @@
                     showCommitteePanel();
                 } else if (text === 'Paper Submission') {
                     showSubmissionPanel();
+                } else if (text === 'Presentation Guidelines') {
+                    showPresentationPanel();
                 }
                 
                 // 移动端点击导航菜单后自动关闭导航菜单
@@ -1488,6 +1589,8 @@
             if (commP) commP.classList.remove('active');
             const submP = document.getElementById('submissionPanel');
             if (submP) submP.classList.remove('active');
+            const presP = document.getElementById('presentationPanel');
+            if (presP) presP.classList.remove('active');
             
             // 关闭移动端PDF图片显示
             const mobileContainer = document.querySelector('.mobile-pdf-image-container');
@@ -1655,6 +1758,30 @@
 
         function hideSubmissionPanel() {
             document.getElementById('submissionPanel').classList.remove('active');
+            // 返回轮播图页面（主页）
+            showHome();
+            // 重置导航菜单的激活状态
+            document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+            // 设置ICGEC-2025为激活状态
+            document.querySelector('.nav-menu a:first-child').classList.add('active');
+        }
+
+        // ================================
+        // 中文注释：Presentation Guidelines 面板 显示/隐藏
+        // ================================
+        function showPresentationPanel() {
+            // 先关闭移动端PDF图片显示
+            const mobileContainer = document.querySelector('.mobile-pdf-image-container');
+            if (mobileContainer) {
+                mobileContainer.remove();
+            }
+            
+            document.getElementById('presentationPanel').classList.add('active');
+            document.querySelector('.main-content').classList.add('hidden');
+        }
+
+        function hidePresentationPanel() {
+            document.getElementById('presentationPanel').classList.remove('active');
             // 返回轮播图页面（主页）
             showHome();
             // 重置导航菜单的激活状态
